@@ -1,0 +1,13 @@
+apiVersion: v1 
+kind: Pod
+metadata:
+  name: greeter-pod
+  labels:
+    app: project1-greeter
+
+spec:
+  containers:
+    - name: greeter-container
+      image: gyezhov266/project1:latest
+      ports:
+      - containerPort: 8080
