@@ -3,7 +3,7 @@ kind: Pod
 metadata:
   name: greeter-pod
   labels:
-    pod: project1-greeter
+    pod: greeter-pod
     extra: another-value
 
 spec:
