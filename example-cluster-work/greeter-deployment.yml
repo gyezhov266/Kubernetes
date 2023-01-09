@@ -7,12 +7,6 @@ metadata:
     deployment: "greeter-deployment"
 spec: # this is where we create the replicaset specs
   replicas: 3
-  # # minReadySeconds: 5
-  # strategy:
-  #   type: RollingUpdate
-  #   rollingUpdate:
-  #     maxSurge: 1
-  #     maxUnavailable: 0
   selector:
     matchLabels:
       pod: "greeter-pod"
@@ -24,7 +18,7 @@ spec: # this is where we create the replicaset specs
       # terminationGracePeriodSeconds: 30
       containers:
       - name: "greeter-app"
-        image: "gyezhov266/project1:latest"
+        image: "esuminski/english:broken"
         imagePullPolicy: "Always"
         ports:
         - containerPort: 8080
