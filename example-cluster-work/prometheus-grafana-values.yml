@@ -1,0 +1,11 @@
+grafana:
+    namespaceOverride: "default"
+    grafana.ini:
+      server:
+        serve_from_sub_path: "true"
+        root_url: "%(protocol)s://%(domain)s:/grafana/" # would like to find a way to indicate default url
+
+    ingress:
+      enabled: true
+      path: /grafana
+      ingressClassName: nginx
