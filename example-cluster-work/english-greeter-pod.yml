@@ -1,0 +1,14 @@
+apiVersion: v1 
+kind: Pod
+metadata:
+  name: greeter-pod
+  labels:
+    pod: greeter-pod
+    extra: another-value
+
+spec:
+  containers:
+    - name: greeter-container
+      image: esuminski/english:fixed
+      ports:
+      - containerPort: 8080
