@@ -29,6 +29,10 @@ spec: # this is where we create the replicaset specs
         ports:
         - containerPort: 8080
       
-      
+        volumeMounts:
+          - mountPath: /logs
+            name: logs
+
+
       volumes:
         - name: logs
