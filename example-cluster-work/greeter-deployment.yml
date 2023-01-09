@@ -22,3 +22,4 @@ spec: # this is where we create the replicaset specs
         imagePullPolicy: "Always"
         ports:
         - containerPort: 8080
+        

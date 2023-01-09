@@ -24,3 +24,4 @@ spec:
               name: spanish-greeter-clusterip # notice I am targetting the name, not a label
               port:
                 number: 80 # standard http port
+                
