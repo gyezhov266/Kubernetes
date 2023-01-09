@@ -28,11 +28,22 @@ spec: # this is where we create the replicaset specs
         imagePullPolicy: "Always"
         ports:
         - containerPort: 8080
-      
         volumeMounts:
           - mountPath: /logs
             name: logs
 
+      - name: promtail-container
+        image: grafana/promtail
+        args:
+        - -config.file=/etc/promtail/promtail.yml
+        volumeMounts:
+        - name: logs
+          mountPath: /logs
+        - name: promtail-config
+          mountPath: /etc/promtail
 
       volumes:
         - name: logs
+        - name: promtail-config
+          configMap: 
+            name: promtail-config
