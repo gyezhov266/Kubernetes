@@ -68,3 +68,37 @@ Now you can use tools like curl or wget to test the response time of the Splunk 
 curl http://localhost:8000
 ```
 This command sends an HTTP request to the Splunk web interface running on port 8000 and measures the response time.
+
+--REDIS--
+
+Let's say we want to use Redis as a cache store for Splunk's search results. We can create a Redis container and configure Splunk to use it as a caching layer. Here's how we might set this up:
+
+First, we'll create a Redis container using the redis:alpine image:
+```go
+docker run -d --name redis -p 6379:6379 redis:alpine
+```
+This will start a Redis container with the redis:alpine image and map port 6379 on the host machine to port 6379 in the container.
+
+Next, we'll need to configure Splunk to use Redis as a caching layer. We can do this by adding the following lines to the splunk.conf file:
+```go
+[Cache]
+Type = redis
+Host = localhost
+Port = 6379
+DB = 0
+ExpireTime = 3600
+```
+These lines tell Splunk to use Redis as a caching layer, connect to the Redis server running on localhost and port 6379, use database number 0, and set the expiration time for cached data to 3600 seconds (one hour).
+
+After modifying the splunk.conf file, we'll need to restart the Splunk container so that it picks up the changes:
+```go
+docker restart splunk
+```
+With Redis configured as a caching layer, Splunk will now store search results in Redis instead of disk. When a user submits a search query, Splunk will first check if the search results are already stored in Redis. If they are, Splunk will retrieve them from Redis instead of re-running the search. This can significantly improve the performance of Splunk since it avoids re-computing the search results every time a user searches for something.
+Here's an example of how this might work:
+
+Suppose a user submits a search query for "error logs". Splunk will first check if the search results are already stored in Redis. If they are, Splunk will retrieve them from Redis and display them to the user. If they're not, Splunk will perform the search and store the results in Redis before displaying them to the user.
+
+To illustrate this, let's say the search query returns 1000 error logs. Without Redis, Splunk would need to load all 1000 logs into memory, process them, and then display them to the user. With Redis, Splunk can simply retrieve the pre-processed search results from Redis, which takes much less time and reduces the amount of memory required.
+
+In addition to improving performance, using Redis as a caching layer also simplifies scalability since it allows us to add more Redis nodes to handle increased traffic without having to modify the Splunk configuration.
